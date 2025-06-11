@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_order_items",
+  "info": {
+    "displayName": "OrderItem",
+    "icon": "puzzle"
+  },
+  "options": {},
+  "attributes": {
+    "product_variant": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product-variant.product-variant"
+    },
+    "quantity": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "price_at_purchase": {
+      "type": "decimal",
+      "required": true
+    }
+  },
+  "config": {}
+}

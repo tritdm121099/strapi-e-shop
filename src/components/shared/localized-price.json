@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_shared_localized_prices",
+  "info": {
+    "displayName": "LocalizedPrice",
+    "icon": "cog"
+  },
+  "options": {},
+  "attributes": {
+    "price": {
+      "type": "biginteger",
+      "required": true
+    },
+    "currency": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::currency.currency"
+    }
+  },
+  "config": {}
+}

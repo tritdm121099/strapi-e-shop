@@ -1,0 +1,65 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "Order"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "order_number": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "total_amount": {
+      "type": "decimal",
+      "required": true
+    },
+    "order_status": {
+      "type": "enumeration",
+      "required": true,
+      "default": "pending",
+      "enum": [
+        "pending",
+        "processing",
+        "shipped",
+        "delivered",
+        "cancelled "
+      ]
+    },
+    "payment_status": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "paid",
+        "unpaid",
+        "refunded"
+      ]
+    },
+    "payment_method": {
+      "type": "string",
+      "required": true
+    },
+    "shipping_address": {
+      "type": "component",
+      "component": "shared.address",
+      "repeatable": false,
+      "required": true
+    },
+    "OrderItem": {
+      "type": "component",
+      "component": "shared.order-item",
+      "repeatable": true,
+      "required": true
+    },
+    "order_date": {
+      "type": "datetime",
+      "required": true
+    }
+  }
+}

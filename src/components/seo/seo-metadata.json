@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_seo_seo_metadata",
+  "info": {
+    "displayName": "SeoMetadata",
+    "icon": "alien"
+  },
+  "options": {},
+  "attributes": {
+    "seo_title": {
+      "type": "string",
+      "required": true
+    },
+    "seo_description": {
+      "type": "text",
+      "required": true
+    },
+    "seo_image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "canonical_url": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}
