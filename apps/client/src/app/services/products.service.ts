@@ -1,33 +1,36 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { Product } from '../model/product.i';
+import { StrapiGetList } from '../shared/model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-  // apiUrl = process.env['API_URL'];
-  apiUrl = 'http://localhost:1337/api';
+  apiUrl = "/api";
 
   private http = inject(HttpClient);
 
-  getProducts(): Observable<any[]> {
-    // let params = new HttpParams();
-    // params = params.set('populate'));
+  getProducts(): Observable<Product[]> {
+    let params = new HttpParams();
+    const paramsData = [
+      'variants',
+      'variants.main_image',
+      'variants.additional_images',
+      'default_prices',
+      'default_prices.currency',
+    ];
+    paramsData.forEach((param, index) => {
+      params = params.set(`populate[${index}]`, param);
+    });
 
     return this.http
-      .get<any>(`${this.apiUrl}/products?populate[0]=variants&populate[1]=variants.main_image&populate[2]=variants.additional_images`, {
-        // params: params,
-        headers: {
-          'Cache-Control':
-            'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-          Pragma: 'no-cache',
-          Expires: '0',
-        },
+      .get<StrapiGetList<Product>>(`${this.apiUrl}/products`, {
+        params: params,
       })
-      .pipe(
-        map((response) => response.data)
-      );
+      .pipe(map((response) => response.data));
   }
 
   getProductBySlug(slug: string): Observable<any> {

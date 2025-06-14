@@ -1,5 +1,6 @@
 import {
   ApplicationConfig,
+  PLATFORM_ID,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
@@ -10,14 +11,27 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './interceptors';
+import { LOCAL_STORAGE } from './tokens';
+import { isPlatformServer } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    {
+      provide: LOCAL_STORAGE,
+      useFactory: (platformId: object) => {
+        if (isPlatformServer(platformId)) {
+          return {};
+        }
+        return localStorage;
+      },
+      deps: [PLATFORM_ID],
+    },
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
   ],
 };
