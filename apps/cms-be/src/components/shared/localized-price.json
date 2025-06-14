@@ -7,7 +7,7 @@
   "options": {},
   "attributes": {
     "price": {
-      "type": "biginteger",
+      "type": "integer",
       "required": true
     },
     "currency": {

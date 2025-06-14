@@ -38,7 +38,7 @@ export interface SharedLocalizedPrice extends Struct.ComponentSchema {
   };
   attributes: {
     currency: Schema.Attribute.Relation<'oneToOne', 'api::currency.currency'>;
-    price: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    price: Schema.Attribute.Integer & Schema.Attribute.Required;
   };
 }
 
