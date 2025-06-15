@@ -1,0 +1,71 @@
+<div
+  class="relative w-full overflow-hidden bg-gray-100 banner-slider-container"
+>
+  <div
+    class="flex transition-transform duration-500 ease-in-out banner-slides-wrapper"
+    [style.transform]="'translateX(-' + currentSlideIndex() * 100 + '%)'"
+  >
+    @for (banner of banners(); track banner.documentId; let i = $index ) {
+    <div
+      class="w-full flex-shrink-0 relative h-96 md:h-[450px] bg-cover bg-center"
+      [style.backgroundImage]="'url(\'' + banner.image.url + '\')'"
+    >
+      <div
+        class="absolute inset-0 bg-opacity-25 flex items-center justify-start md:justify-center p-6 md:p-20 text-white text-center md:text-left"
+      >
+        <div class="max-w-2xl">
+          <h2
+            *ngIf="banner.subtitle"
+            class="text-xl md:text-3xl font-semibold mb-2"
+          >
+            {{ banner.subtitle }}
+          </h2>
+          <h1 class="text-3xl md:text-5xl font-bold mb-4">
+            {{ banner.title }}
+          </h1>
+          @if (banner.button_text && banner.link) {
+          <a
+            [attr.href]="banner.link"
+            class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300"
+          >
+            {{ banner.button_text }}
+          </a>
+          }
+        </div>
+      </div>
+    </div>
+
+    }
+  </div>
+
+  <div
+    *ngIf="banners().length > 1"
+    class="absolute bottom-5 left-0 right-0 flex justify-center space-x-3 z-10"
+  >
+    @for (banner of banners(); track banner.documentId; let i = $index ) {
+    <button
+      (click)="goToSlide(i)"
+      class="w-3 h-3 rounded-full"
+      [ngClass]="{
+        'bg-gray-800': i === currentSlideIndex(),
+        'bg-gray-400': i !== currentSlideIndex()
+      }"
+    ></button>
+    }
+  </div>
+
+  <button
+    *ngIf="banners().length > 1"
+    (click)="clickSlide('back')"
+    class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full focus:outline-none z-10"
+  >
+    <app-svg-left></app-svg-left>
+  </button>
+  <button
+    *ngIf="banners().length > 1"
+    (click)="clickSlide('forward')"
+    class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full focus:outline-none z-10"
+  >
+    <app-svg-right></app-svg-right>
+  </button>
+</div>
