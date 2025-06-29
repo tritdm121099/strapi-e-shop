@@ -5,11 +5,12 @@ import { RouterLink, Router } from '@angular/router';
 import { Observable } from 'rxjs'; // Import Observable
 import { AuthService } from '../services/auth.service';
 import { CategoryService } from '../services/category.service';
+import { MenuSvgComponent, XSvgComponent } from '../svg';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MenuSvgComponent, XSvgComponent],
   template: `
     <header class="bg-gray-800 text-white shadow-md sticky top-0 z-50">
       <nav
@@ -27,28 +28,11 @@ import { CategoryService } from '../services/category.service';
             (click)="toggleMobileMenu()"
             class="text-white focus:outline-none"
           >
-            <svg
-              class="w-7 h-7"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                *ngIf="!isMobileMenuOpen"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-              <path
-                *ngIf="isMobileMenuOpen"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
+            @if (!isMobileMenuOpen) {
+              <app-menu-svg></app-menu-svg>
+            } @else {
+              <app-x-svg></app-x-svg>
+            }
           </button>
         </div>
 
@@ -58,11 +42,6 @@ import { CategoryService } from '../services/category.service';
             class="text-white hover:text-gray-300 transition duration-200"
             >Trang Chủ</a
           >
-          <!-- <a
-            routerLink="/products"
-            class="text-white hover:text-gray-300 transition duration-200"
-            >Sản Phẩm</a
-          > -->
 
           <div class="relative group">
             <button
@@ -88,12 +67,6 @@ import { CategoryService } from '../services/category.service';
               >
             </div>
           </div>
-
-          <!-- <a
-            routerLink="/blog"
-            class="text-white hover:text-gray-300 transition duration-200"
-            >Blog</a
-          > -->
 
           <ng-container *ngIf="(isAuthenticated$ | async) === false">
             <a
